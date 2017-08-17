@@ -39,6 +39,8 @@ import re
 import collections
 #import pprint
 
+import pickle
+
 #logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.ERROR)
 
@@ -70,7 +72,12 @@ try:
     os.makedirs('./data')
 except OSError:
     pass
+try:
+    os.makedirs('./cache')
+except OSError:
+    pass
 
+# the year in which fedmesg starts.
 starttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")
 
 
@@ -98,75 +105,90 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
 
         print "Working on %s / %s" % (discriminant, starttime.strftime("%Y-%m-%d")),
 
-        for attempt in range(10):
-            try:
-                messages = utils.grep(
-                    rows_per_page=100,
-                    meta='usernames',
-                    start=int((starttime-epoch).total_seconds()),
-                    end=int((endtime - epoch).total_seconds()),
-                    order='asc',  # Start at the beginning, end at now.
-                    topic=discriminant,
-                    # Cut this stuff out, because its just so spammy.
-                    not_user=['anonymous','koschei'],
-                    not_topic=verboten,
-                )
-            except IOError:
-                print "Retrying."
-                time.sleep(5)
-            else:
-                break
+        msgcachefile = "cache/" + discriminant + "." + starttime.strftime("%Y-%m-%d") + ".pickle"
+        
+        if os.path.exists(msgcachefile):
+          with open(msgcachefile,"r") as msgcache:
+            weekinfo=pickle.load(msgcache)
+
         else:
-            raise "too much timeout"
+        
+          for attempt in range(10):
+              try:
+                  messages = utils.grep(
+                      rows_per_page=100,
+                      meta='usernames',
+                      start=int((starttime-epoch).total_seconds()),
+                      end=int((endtime - epoch).total_seconds()),
+                      order='asc',  # Start at the beginning, end at now.
+                      topic=discriminant,
+                      # Cut this stuff out, because its just so spammy.
+                      not_user=['anonymous','koschei'],
+                      not_topic=verboten,
+                  )
+              except IOError:
+                  print "Retrying."
+                  time.sleep(5)
+              else:
+                  break
+          else:
+              raise "too much timeout"
 
-        for i, msg in enumerate(messages):
-            # sanity check
-            if msg['topic'] in verboten:
-                raise "hell"
+          for i, msg in enumerate(messages):
+              # sanity check
+              if msg['topic'] in verboten:
+                  raise "hell"
 
-            for user in msg['meta']['usernames']:
-               if user == 'releng':
-                   weekinfo.nonhuman['relengactions'] +=1
-                   continue
-               if user in bots:
-                   weekinfo.nonhuman['botactions'] +=1
-                   continue
-               if user in spammers:
-                   weekinfo.nonhuman['spamactions'] +=1
-                   if not user in firstseen:
-                       firstseen[user]=starttime # todo: make this actual first time, not first week
-                       weekinfo.nonhuman['newspammers'] +=1
-                   continue
-               if '@' in user:
-                   # some msgs put email for anon users
-                   continue
-                
-               weekinfo.useractions[user] += 1
-               yeartotals[starttime.strftime("%Y")][user] += 1
-               
-               if not user in firstseen:
-                   firstseen[user]=starttime # todo: make this actual first time, not first week
-                   weekinfo.newusers['count'] += 1
-                   
-               if (starttime - firstseen[user]).days < 7:
-                   weekinfo.actionsbyage['new'] += 1
-               elif (starttime - firstseen[user]).days < 31:
-                   weekinfo.actionsbyage['month'] += 1
-               elif (starttime - firstseen[user]).days < 365:
-                   weekinfo.actionsbyage['year'] += 1
-               else:
-                   weekinfo.actionsbyage['older'] += 1
-               
-               lastseen[user]=starttime
+              for user in msg['meta']['usernames']:
+                 if user == 'releng':
+                     weekinfo.nonhuman['relengactions'] +=1
+                     continue
+                 if user in bots:
+                     weekinfo.nonhuman['botactions'] +=1
+                     continue
+                 if user in spammers:
+                     weekinfo.nonhuman['spamactions'] +=1
+                     if not user in firstseen:
+                         firstseen[user]=starttime # todo: make this actual first time, not first week
+                         weekinfo.nonhuman['newspammers'] +=1
+                     continue
+                 if '@' in user:
+                     # some msgs put email for anon users
+                     continue
+                  
+                 weekinfo.useractions[user] += 1
+                 #FIXMETHIS IS BROKEN NOW
+                 yeartotals[starttime.strftime("%Y")][user] += 1
+                 
+                 if not user in firstseen:
+                     firstseen[user]=starttime # todo: make this actual first time, not first week
+                     weekinfo.newusers['count'] += 1
+                     
+                 if (starttime - firstseen[user]).days < 7:
+                     weekinfo.actionsbyage['new'] += 1
+                 elif (starttime - firstseen[user]).days < 31:
+                     weekinfo.actionsbyage['month'] += 1
+                 elif (starttime - firstseen[user]).days < 365:
+                     weekinfo.actionsbyage['year'] += 1
+                 else:
+                     weekinfo.actionsbyage['older'] += 1
+                 
+                 lastseen[user]=starttime
 
-            
-            if i % 50 == 0:
-                sys.stdout.write(".")
-                sys.stdout.flush()            
+              
+              if i % 50 == 0:
+                  sys.stdout.write(".")
+                  sys.stdout.flush()            
+           
+          print       
+          #pprint.pprint(dict(weekinfo.useractions))
          
-        print       
-        #pprint.pprint(dict(weekinfo.useractions))
+          with open(msgcachefile+".temp","w") as msgcache:
+              pickle.dump(weekinfo,msgcache,)
+          os.rename(msgcachefile+".temp",msgcachefile)
+
         yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
+        
         ring.append(weekinfo)
         
          
