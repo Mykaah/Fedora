@@ -108,8 +108,10 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         msgcachefile = "cache/" + discriminant + "." + starttime.strftime("%Y-%m-%d") + ".pickle"
         
         if os.path.exists(msgcachefile):
+
           with open(msgcachefile,"r") as msgcache:
-            weekinfo=pickle.load(msgcache)
+            [yeartotals,weekinfo]=pickle.load(msgcache)
+            print "(cached)"
 
         else:
         
@@ -157,7 +159,6 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                      continue
                   
                  weekinfo.useractions[user] += 1
-                 #FIXMETHIS IS BROKEN NOW
                  yeartotals[starttime.strftime("%Y")][user] += 1
                  
                  if not user in firstseen:
@@ -184,8 +185,9 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
           #pprint.pprint(dict(weekinfo.useractions))
          
           with open(msgcachefile+".temp","w") as msgcache:
-              pickle.dump(weekinfo,msgcache,)
+              pickle.dump(weekinfo,(yeartotals,msgcache))
           os.rename(msgcachefile+".temp",msgcachefile)
+
 
         yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
         
