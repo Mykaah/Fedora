@@ -185,7 +185,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
           #pprint.pprint(dict(weekinfo.useractions))
          
           with open(msgcachefile+".temp","w") as msgcache:
-              pickle.dump(weekinfo,(yeartotals,msgcache))
+              pickle.dump((yeartotals,weekinfo),msgcache)
           os.rename(msgcachefile+".temp",msgcachefile)
 
 
