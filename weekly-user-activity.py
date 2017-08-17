@@ -33,6 +33,8 @@ import logging
 import os
 import sys
 
+import string
+import re
 
 import collections
 #import pprint
@@ -49,6 +51,11 @@ discriminant = sys.argv[-1]
 if __file__.split('/')[-1] in discriminant:
     print "usage: '$ ./weekly-user-activity.py TOPIC'"
     sys.exit(1)
+    
+if not re.match("^[a-z\.]*$", discriminant):
+    print "bad discriminant"
+    sys.exit(2)
+
 
 print "operating with discriminant", discriminant
 
