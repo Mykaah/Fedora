@@ -39,7 +39,7 @@ import re
 import collections
 #import pprint
 
-import pickle
+import cPickle as pickle
 
 #logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.ERROR)
