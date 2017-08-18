@@ -37,7 +37,7 @@ import string
 import re
 
 import collections
-#import pprint
+import pprint
 
 import cPickle as pickle
 
@@ -110,7 +110,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         if os.path.exists(msgcachefile):
 
           with open(msgcachefile,"r") as msgcache:
-            [yeartotals,weekinfo]=pickle.load(msgcache)
+            [yeartotals,firstseen,lastseen,weekinfo]=pickle.load(msgcache)
             print "(cached)"
 
         else:
@@ -185,7 +185,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
           #pprint.pprint(dict(weekinfo.useractions))
          
           with open(msgcachefile+".temp","w") as msgcache:
-              pickle.dump((yeartotals,weekinfo),msgcache)
+              pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
           os.rename(msgcachefile+".temp",msgcachefile)
 
 
