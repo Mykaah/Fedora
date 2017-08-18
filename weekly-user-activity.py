@@ -184,9 +184,12 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
           print       
           #pprint.pprint(dict(weekinfo.useractions))
          
-          with open(msgcachefile+".temp","w") as msgcache:
-              pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
-          os.rename(msgcachefile+".temp",msgcachefile)
+          # don't cache the current week (may not be comlete), and definitely
+          # don't cache the future weeks (certainly not complete)
+          if endtime < (datetime.datetime.now() - datetime.timedelta(1)) :
+              with open(msgcachefile+".temp","w") as msgcache:
+                  pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
+              os.rename(msgcachefile+".temp",msgcachefile)
 
 
         yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
