@@ -49,6 +49,8 @@ bots     = [line.rstrip('\n') for line in open('bots.list')]
 
 epoch = datetime.datetime.utcfromtimestamp(0)
 
+ipaddrre = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
+
 discriminant = sys.argv[-1]
 if __file__.split('/')[-1] in discriminant:
     print "usage: '$ ./weekly-user-activity.py TOPIC'"
@@ -156,6 +158,9 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                      continue
                  if '@' in user:
                      # some msgs put email for anon users
+                     continue
+                 if ipaddrre.match(user):
+                     # some msgs (wiki) put ip addr for anon users
                      continue
                   
                  weekinfo.useractions[user] += 1
