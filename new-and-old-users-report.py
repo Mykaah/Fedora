@@ -28,13 +28,13 @@ for datasource in datasources:
       # store only users who have activity in the past 365 days 
       # and were active more than one week
       if row['lastseen'] > lastyear:
+        user=row['user']
         totalactions += row['actions']
+        actioncount[user]+=row['actions']
         # mostly, we're filtering out users not active at least 3 weeks
         if row['weeks'] > 2:
-          user=row['user']
           firstseen[user]=row['firstseen']
           lastseen[user]=row['lastseen']
-          actioncount[user]+=row['actions']
           weeksactive[user]=max(weeksactive[user],row['weeks'])
           if row['firstseen'] < twoyears:
             oldschoolornew[user]="old-school"
@@ -80,6 +80,8 @@ print ("New contributors this year: {:>5}".format(newcount))
 print ("\n")
 print ("New core contributors:      {:>5}".format(newcore))
 print ("Old core contributors:      {:>5}".format(oldcore))
+print ("\n")
+print ("Raw total contributors:     {:>5}".format(len(actioncount)))   
 print ("\n")
 print ("Active means at least 3 separate weeks of activity.")
 print ("Core means part of the set doing about ⅔s of all actions.")
