@@ -51,14 +51,14 @@ fig.savefig('images/git.activity.share.svg',dpi=300)
 
 ###############################################
 
-graph=datagit[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
-                                                              color='#579d1c',
-                                                              grid=True,legend=False)
-plt.suptitle("New Packaging Contributor Count Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/git.newusers.svg',dpi=300)
+#graph=datagit[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
+#                                                              color='#579d1c',
+#                                                              grid=True,legend=False)
+#plt.suptitle("New Packaging Contributor Count Per Week",fontsize=24)
+#graph.set_title('')
+#graph.set_xlabel('')
+#fig=graph.get_figure()
+#fig.savefig('images/git.newusers.svg',dpi=300)
 
 #############################################
 
@@ -122,14 +122,14 @@ fig.savefig('images/bodhi.activity.share.svg',dpi=300)
 
 ###############################################
 
-graph=databodhi[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
-                                                              color='#579d1c',
-                                                              grid=True,legend=False)
-plt.suptitle("New Update Testing Contributor Count Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/bodhi.newusers.svg',dpi=300)
+#graph=databodhi[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
+#                                                              color='#579d1c',
+#                                                              grid=True,legend=False)
+#plt.suptitle("New Update Testing Contributor Count Per Week",fontsize=24)
+#graph.set_title('')
+#graph.set_xlabel('')
+#fig=graph.get_figure()
+#fig.savefig('images/bodhi.newusers.svg',dpi=300)
 
 #############################################
 
@@ -194,24 +194,24 @@ fig.savefig('images/wiki.activity.share.svg',dpi=300)
 
 ###############################################
 
-graph=datawiki[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
-                                                              color='#579d1c',
-                                                              grid=True,legend=False)
-plt.suptitle("New Wiki Contributor Count Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/wiki.newusers.svg',dpi=300)
+#graph=datawiki[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
+#                                                              color='#579d1c',
+#                                                              grid=True,legend=False)
+#plt.suptitle("New Wiki Contributor Count Per Week",fontsize=24)
+#graph.set_title('')
+#graph.set_xlabel('')
+#fig=graph.get_figure()
+#fig.savefig('images/wiki.newusers.svg',dpi=300)
 ###############################################
 
-graph=datawiki[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
-                                                              color='#579d1c',
-                                                              grid=True,legend=False)
-plt.suptitle("New Wiki Contributor Count Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/wiki.newusers.svg',dpi=300)
+#graph=datawiki[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
+#                                                              color='#579d1c',
+#                                                              grid=True,legend=False)
+#plt.suptitle("New Wiki Contributor Count Per Week",fontsize=24)
+#graph.set_title('')
+#graph.set_xlabel('')
+#fig=graph.get_figure()
+#fig.savefig('images/wiki.newusers.svg',dpi=300)
 
 #############################################
 
@@ -274,14 +274,14 @@ fig.savefig('images/pagure.activity.share.svg',dpi=300)
 
 ###############################################
 
-graph=datapagure[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
-                                                              color='#579d1c',
-                                                              grid=True,legend=False)
-plt.suptitle("New Pagure Contributor Count Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/pagure.newusers.svg',dpi=300)
+#graph=datapagure[['newusercount']].rename(columns={"newusercount": "New Users"}).plot.area(figsize=(16, 9),
+#                                                              color='#579d1c',
+#                                                              grid=True,legend=False)
+#plt.suptitle("New Pagure Contributor Count Per Week",fontsize=24)
+#graph.set_title('')
+#graph.set_xlabel('')
+#fig=graph.get_figure()
+#fig.savefig('images/pagure.newusers.svg',dpi=300)
 
 #############################################
 
