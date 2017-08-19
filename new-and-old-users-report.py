@@ -10,17 +10,21 @@ actioncount = collections.defaultdict(int)
 oldschoolornew = {}
 totalactions = 0
 
-# blah blah blah leap years this is precise enough for what we're doing
-lastyear = datetime.datetime.now() - datetime.timedelta(365)
-twoyears = datetime.datetime.now() - datetime.timedelta(730)
 
 cmdline=sys.argv[-1]
 if __file__.split('/')[-1] in cmdline:
-   nowweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
+   reportweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
 else:
-   nowweek=int(cmdline)
+   reportweek=int(cmdline)
+
+
+
+reporttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.timedelta(reportweek*7)
+# 52 weeks is precise enough for metrics gathering :)
+lastyear = reporttime - datetime.timedelta(364)
+twoyears = reporttime - datetime.timedelta(728)
    
-weeks = range(nowweek-52,nowweek)
+weeks = range(reportweek-52,reportweek)
 
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
@@ -77,7 +81,8 @@ for user in oldschoolornew:
     if user in topusers:
       newcore+=1
       
-print ("Report for {}:".format(datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.timedelta(nowweek*7)))
+print ("Report for {0:%Y-%m-%d}:".format(reporttime))
+print ("")
 print ("Total active contributors:  {:>5}".format(allcount))   
 print ("Core contributors (⅔):      {:>5}".format(len(topusers)))
 print ("Old-school contributors:    {:>5}".format(oldcount))
