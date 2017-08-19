@@ -12,11 +12,22 @@ oldschoolornew = {}
 totalactions = 0
 
 
-cmdline=sys.argv[-1]
-if __file__.split('/')[-1] in cmdline:
-   reportweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
+n = len(sys.argv[1:])
+csvoutput=False
+if n == 0:
+  reportweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
+elif n == 1:
+   reportweek=int(sys.argv[1])
+elif sys.argv[1] == "--csv":
+   reportweek=int(sys.argv[2])
+   csvoutput=True
+   csvheader=False
+elif sys.argv[1] == "--csvh":
+   reportweek=int(sys.argv[2])
+   csvoutput=True
+   csvheader=True
 else:
-   reportweek=int(cmdline)
+  sys.exit(1)
 
 
 
@@ -92,6 +103,16 @@ for user in oldschoolornew:
     newcount+=1
     if user in topusers:
       newcore+=1
+
+if csvoutput:
+  if csvheader:
+    print("rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
+  print(len(actioncount),
+        oldcount,allactive-(oldcount+newcount),newcount,
+        oldcore,len(topusers)-(oldcore+newcore),newcore,
+        sep=",")
+  sys.exit(0)
+
       
 print ("Report for {0:%Y-%m-%d}:".format(reporttime))
 print ("")
