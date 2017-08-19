@@ -179,7 +179,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
               
               if i % 50 == 0:
                   sys.stdout.write(".")
-                  sys.stdout.flush()            
+                  sys.stdout.flush()
            
           print       
           #pprint.pprint(dict(weekinfo.useractions))
@@ -187,9 +187,12 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
           # don't cache the current week (may not be comlete), and definitely
           # don't cache the future weeks (certainly not complete)
           if endtime < (datetime.datetime.now() - datetime.timedelta(1)) :
+              sys.stdout.write("Saving... ")
+              sys.stdout.flush()
               with open(msgcachefile+".temp","w") as msgcache:
                   pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
+              print "saved."
 
 
         yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
