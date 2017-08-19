@@ -107,7 +107,7 @@ for user in oldschoolornew:
 if csvoutput:
   if csvheader:
     print("week,rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
-  print("{0:%Y-%m-%d}:".format(reporttime),len(actioncount),
+  print("{0:%Y-%m-%d}".format(reporttime),len(actioncount),
         oldcount,allactive-(oldcount+newcount),newcount,
         oldcore,len(topusers)-(oldcore+newcore),newcore,
         sep=",")
