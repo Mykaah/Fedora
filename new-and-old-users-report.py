@@ -7,7 +7,6 @@ import sys
 firstseen = collections.OrderedDict()
 lastseen  = collections.OrderedDict()
 actioncount = collections.defaultdict(int)
-weeksactive = collections.defaultdict(int)
 oldschoolornew = {}
 totalactions = 0
 
@@ -15,12 +14,13 @@ totalactions = 0
 lastyear = datetime.datetime.now() - datetime.timedelta(365)
 twoyears = datetime.datetime.now() - datetime.timedelta(730)
 
-nowweek=sys.argv[-1]
-if __file__.split('/')[-1] in nowweek:
+cmdline=sys.argv[-1]
+if __file__.split('/')[-1] in cmdline:
    nowweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
-
+else:
+   nowweek=int(cmdline)
+   
 weeks = range(nowweek-52,nowweek)
-print(weeks)
 
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
@@ -29,23 +29,26 @@ datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
 
 for datasource in datasources:
   for week in weeks:
-    datafragment=pandas.read_csv("data/weekly/{}.userdata.{:05}.csv".format(datasource,week),parse_dates=[3,4])
+    try:
+      datafragment=pandas.read_csv("data/weekly/{}.userdata.{:05}.csv".format(datasource,week),parse_dates=[2,3])
+    except FileNotFoundError:
+      # ignore missing data.... probably should errror on _everything_ missing (FIXME)
+      continue
+      
     for index, row in datafragment.iterrows():
-      # store only users who have activity in the past 365 days 
-      if row['lastseen'] > lastyear:
-        user=row['user']
-        totalactions += row['actions']
-        actioncount[user]+=row['actions']
-        # fixme: need to scan through first and count number of weeks active
-        firstseen[user]=row['firstseen']
-        lastseen[user]=row['lastseen']
-        weeksactive[user]=max(weeksactive[user],row['weeks'])
-        if row['firstseen'] < twoyears:
-          oldschoolornew[user]="old-school"
-        elif row['firstseen'] >= lastyear:
-          oldschoolornew[user]="new contributor"
-        else:
-          oldschoolornew[user]=""
+      user=row['user']
+      totalactions += row['actions']
+      actioncount[user]+=row['actions']
+      # fixme: need to scan through first and count number of weeks active
+      firstseen[user]=row['firstseen']
+      lastseen[user]=row['lastseen']
+      #weeksactive[user]=max(weeksactive[user],row['weeks'])
+      if row['firstseen'] < twoyears:
+        oldschoolornew[user]="old-school"
+      elif row['firstseen'] >= lastyear:
+        oldschoolornew[user]="new contributor"
+      else:
+        oldschoolornew[user]=""
 
 
 oldcount=0
@@ -74,7 +77,7 @@ for user in oldschoolornew:
     if user in topusers:
       newcore+=1
       
-    
+print ("Report for {}:".format(datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.timedelta(nowweek*7)))
 print ("Total active contributors:  {:>5}".format(allcount))   
 print ("Core contributors (⅔):      {:>5}".format(len(topusers)))
 print ("Old-school contributors:    {:>5}".format(oldcount))
