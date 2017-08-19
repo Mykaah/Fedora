@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 import os
 import pandas
-import matplotlib.pyplot as plt 
 import matplotlib as m
+m.use("Agg")
+import matplotlib.pyplot as plt 
 m.rcParams['font.size'] = 12
 m.rcParams['font.family'] = 'Overpass'
 m.rcParams['legend.frameon'] = False
