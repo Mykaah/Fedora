@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import os
 import pandas
 import matplotlib.pyplot as plt 
 import matplotlib as m
