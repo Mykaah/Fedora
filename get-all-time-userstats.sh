@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# INCREDIBLY IMPORTANT: This report generates a per-week stat for number of users active _over the past 52 weeks_,
+# not just in the current week; it is a rolling average.
+
 # This script is silly and inefficient. Should include directly in new-and-old-users-report.py and make that
 # not re-read all the data over and over (ring buffers FTW!)
 

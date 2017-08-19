@@ -4,6 +4,10 @@ import datetime
 import collections
 import sys
 
+# INCREDIBLY IMPORTANT: This report generates a per-week stat for number of users active _over the past 52 weeks_,
+# not just in the current week; it is a rolling average.
+
+
 firstseen = collections.OrderedDict()
 lastseen  = collections.OrderedDict()
 actioncount = collections.defaultdict(int)
