@@ -235,17 +235,6 @@ fig=graph.get_figure()
 fig.savefig('images/wiki.activity.length.svg',dpi=300)
 
 ###############################################
-
-graph=datawiki[['spamactions']][146:].rename(columns={"spamactions": "Spam Edits"}).plot.area(figsize=(16, 9),
-                                                              color='#e00000',
-                                                              grid=True,legend=False)
-plt.suptitle("Spam Edits Per Week",fontsize=24)
-graph.set_title('')
-graph.set_xlabel('')
-fig=graph.get_figure()
-fig.savefig('images/wiki.spam.svg',dpi=300)
-
-###############################################
 ###############################################
 datapagure=pandas.read_csv("data/io.pagure.prod.pagure.git.receive.bucketed-activity.csv",parse_dates=[0])
 datapagure.set_index('weekstart',inplace=True)
