@@ -76,7 +76,7 @@ for datasource in datasources:
       else:
         oldschoolornew[user]=""
 
-
+rawcount=0
 oldcount=0
 newcount=0
 allactive=0
@@ -92,12 +92,20 @@ for user in sorted(actioncount, key=actioncount.get, reverse=True):
   
 newcore=0  
 oldcore=0
+
 for user in oldschoolornew:
+
+  # in csv mode, only report on activity *this* week
+  if csvoutput and not reportweek in weeksactive[user]:
+    continue
+
+  rawcount+=1
 
   # only count users who are active
   # at least 3 distinct weeks
   if len(weeksactive[user]) < 3:
     continue
+
     
   allactive+=1
   if oldschoolornew[user] == "old-school":
@@ -112,7 +120,7 @@ for user in oldschoolornew:
 if csvoutput:
   if csvheader:
     print("week,rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
-  print("{0:%Y-%m-%d}".format(reporttime),len(actioncount),
+  print("{0:%Y-%m-%d}".format(reporttime),rawcount,
         oldcount,allactive-(oldcount+newcount),newcount,
         oldcore,len(topusers)-(oldcore+newcore),newcore,
         sep=",")
@@ -129,7 +137,7 @@ print ("")
 print ("New core contributors:      {:>5}".format(newcore))
 print ("Old core contributors:      {:>5}".format(oldcore))
 print ("")
-print ("Raw total contributors:     {:>5}".format(len(actioncount)))   
+print ("Raw total contributors:     {:>5}".format(rawcount))   
 print ("\n")
 print ("This report is an aggregate of dist-git, bodhi karma, wiki edits,")
 print ("and irc cookies. It doesn't measure all Fedora activity.")
