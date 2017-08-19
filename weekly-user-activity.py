@@ -92,8 +92,7 @@ firstseen={}
 lastseen={}
 
 # 13 weeks = 1 quarter (rolling)
-quarterring = collections.deque(maxlen=13)
-yearring    = collections.deque(maxlen=52)
+ring        = collections.deque(maxlen=13)
 
 with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
     f.write("weekstart,msgs1,msgs9,msgs40,msgsrest,users1,users9,users40,userrest,newusercount,newuseractions,monthuseractions,yearuseractions,olderuseractions,newspammers,spamactions,botactions,relengactions\n")
@@ -203,7 +202,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
 
         yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
         
-        quarterring.append(weekinfo)
+        ring.append(weekinfo)
         
          
 
@@ -216,11 +215,11 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         # needed info. so, we jump back 6 weeks (42 days) from starttime.
         # this is the same as jumping back 7 elements in the deque (if it's that deep)
         
-        if len(quarterring)>6: 
+        if len(ring)>6: 
 
             # first, we're bucketing all the users by percent of activity
             usertotals=collections.Counter()
-            for week in quarterring:
+            for week in ring:
                 usertotals += week.useractions
             userrank = {}
             userbucket = {}
@@ -237,7 +236,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                else:                        # the bottom half
                   userbucket[name]=4           
 
-            workweek=quarterring[len(quarterring)-7] # jump back same amount into the deque
+            workweek=ring[len(ring)-7] # jump back same amount into the deque
 
             bucketscores = {}
             bucketscores[1]=0
