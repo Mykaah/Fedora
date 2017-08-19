@@ -7,6 +7,7 @@ import sys
 # INCREDIBLY IMPORTANT: This report generates a per-week stat for number of users active _over the past 52 weeks_,
 # not just in the current week; it is a rolling average.
 
+# BUT if --csv (or --csvh, for csv with header) is given, it gives the number for _that week only_
 
 firstseen = collections.OrderedDict()
 lastseen  = collections.OrderedDict()
@@ -40,7 +41,7 @@ reporttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.tim
 lastyear = reporttime - datetime.timedelta(364)
 twoyears = reporttime - datetime.timedelta(728)
    
-weeks = range(reportweek-52,reportweek)
+weeks = range(reportweek-51,reportweek+1)
 
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
