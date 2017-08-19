@@ -260,9 +260,9 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                 f.flush()
 
         with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as f:
-            f.write("%s,%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
+            f.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
             for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
-                f.write("%s,%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
+                f.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
         print 'Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum) 
 
         # and loop around
