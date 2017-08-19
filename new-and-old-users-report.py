@@ -7,6 +7,7 @@ import sys
 firstseen = collections.OrderedDict()
 lastseen  = collections.OrderedDict()
 actioncount = collections.defaultdict(int)
+weeksactive = collections.defaultdict(int)
 oldschoolornew = {}
 totalactions = 0
 
@@ -41,12 +42,17 @@ for datasource in datasources:
       
     for index, row in datafragment.iterrows():
       user=row['user']
+
       totalactions += row['actions']
       actioncount[user]+=row['actions']
-      # fixme: need to scan through first and count number of weeks active
+
+      if not user in weeksactive:
+        weeksactive[user]=set()
+      weeksactive[user].add(week)
+
       firstseen[user]=row['firstseen']
       lastseen[user]=row['lastseen']
-      #weeksactive[user]=max(weeksactive[user],row['weeks'])
+
       if row['firstseen'] < twoyears:
         oldschoolornew[user]="old-school"
       elif row['firstseen'] >= lastyear:
@@ -57,7 +63,7 @@ for datasource in datasources:
 
 oldcount=0
 newcount=0
-allcount=0
+allactive=0
 
 accumulator=0
 topusers=[]
@@ -71,7 +77,13 @@ for user in sorted(actioncount, key=actioncount.get, reverse=True):
 newcore=0  
 oldcore=0
 for user in oldschoolornew:
-  allcount+=1
+
+  # only count users who are active
+  # at least 3 distinct weeks
+  if len(weeksactive[user]) < 3:
+    continue
+    
+  allactive+=1
   if oldschoolornew[user] == "old-school":
     oldcount+=1
     if user in topusers:
@@ -83,7 +95,7 @@ for user in oldschoolornew:
       
 print ("Report for {0:%Y-%m-%d}:".format(reporttime))
 print ("")
-print ("Total active contributors:  {:>5}".format(allcount))   
+print ("Total active contributors:  {:>5}".format(allactive))   
 print ("Core contributors (⅔):      {:>5}".format(len(topusers)))
 print ("Old-school contributors:    {:>5}".format(oldcount))
 print ("New contributors this year: {:>5}".format(newcount))
