@@ -8,7 +8,7 @@ m.rcParams['font.family'] = 'Overpass'
 m.rcParams['legend.frameon'] = False
 
 try:
-    os.makedirs('./data')
+    os.makedirs('./images')
 except OSError:
     pass
 
