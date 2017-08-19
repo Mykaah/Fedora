@@ -16,7 +16,6 @@ twoyears = datetime.datetime.now() - datetime.timedelta(730)
 years = (lastyear.strftime("%Y"), datetime.datetime.now().strftime("%Y")) 
 
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
-                "org.fedoraproject.prod.fedoratagger.rating.update",
                 "org.fedoraproject.prod.git.receive",
                 "org.fedoraproject.prod.irc.karma",
                 "org.fedoraproject.prod.wiki.article.edit")
@@ -77,12 +76,15 @@ print ("Total active contributors:  {:>5}".format(allcount))
 print ("Core contributors (⅔):      {:>5}".format(len(topusers)))
 print ("Old-school contributors:    {:>5}".format(oldcount))
 print ("New contributors this year: {:>5}".format(newcount))
-print ("\n")
+print ("")
 print ("New core contributors:      {:>5}".format(newcore))
 print ("Old core contributors:      {:>5}".format(oldcore))
-print ("\n")
+print ("")
 print ("Raw total contributors:     {:>5}".format(len(actioncount)))   
 print ("\n")
+print ("This report is an aggregate of dist-git, bodhi karma, wiki edits,")
+print ("and irc cookies. It doesn't measure all Fedora activity.")
+print ("")
 print ("Active means at least 3 separate weeks of activity.")
 print ("Core means part of the set doing about ⅔s of all actions.")
 print ("Old-school contributors started at least two years ago.")
