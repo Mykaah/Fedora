@@ -78,6 +78,7 @@ for datasource in datasources:
 
 rawcount=0
 oldcount=0
+midcount=0
 newcount=0
 allactive=0
 
@@ -91,6 +92,7 @@ for user in sorted(actioncount, key=actioncount.get, reverse=True):
     break
   
 newcore=0  
+midcore=0
 oldcore=0
 
 for user in oldschoolornew:
@@ -116,13 +118,18 @@ for user in oldschoolornew:
     newcount+=1
     if user in topusers:
       newcore+=1
+  else:
+    midcount+=1
+    if user in topusers:
+      midcore+=1
+  
 
 if csvoutput:
   if csvheader:
     print("week,rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
   print("{0:%Y-%m-%d}".format(reporttime),rawcount,
-        oldcount,allactive-(oldcount+newcount),newcount,
-        oldcore,len(topusers)-(oldcore+newcore),newcore,
+        oldcount,midcount,newcount,
+        oldcore,midcore,newcore,
         sep=",")
   sys.exit(0)
 
