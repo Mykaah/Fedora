@@ -114,7 +114,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
         if os.path.exists(msgcachefile):
 
           with open(msgcachefile,"r") as msgcache:
-            [firstseen,lastseen,weekinfo]=pickle.load(msgcache)
+            [firstseen,lastseen,weekinfo,weekbreakdown]=pickle.load(msgcache)
             print "(cached)"
 
         else:
@@ -197,7 +197,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
               sys.stdout.write("Saving... ")
               sys.stdout.flush()
               with open(msgcachefile+".temp","w") as msgcache:
-                  pickle.dump((firstseen,lastseen,weekinfo),msgcache)
+                  pickle.dump((firstseen,lastseen,weekinfo,weekbreakdown),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
               print "saved."
 
