@@ -2,6 +2,7 @@
 import pandas
 import datetime
 import collections
+import sys
 
 firstseen = collections.OrderedDict()
 lastseen  = collections.OrderedDict()
@@ -13,7 +14,13 @@ totalactions = 0
 # blah blah blah leap years this is precise enough for what we're doing
 lastyear = datetime.datetime.now() - datetime.timedelta(365)
 twoyears = datetime.datetime.now() - datetime.timedelta(730)
-years = (lastyear.strftime("%Y"), datetime.datetime.now().strftime("%Y")) 
+
+nowweek=sys.argv[-1]
+if __file__.split('/')[-1] in nowweek:
+   nowweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
+
+weeks = range(nowweek-52,nowweek)
+print(weeks)
 
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
@@ -21,28 +28,24 @@ datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.wiki.article.edit")
 
 for datasource in datasources:
-  for year in years:
-    datafragment=pandas.read_csv("data/" + datasource + ".userdata." + year + ".csv",parse_dates=[3,4])
+  for week in weeks:
+    datafragment=pandas.read_csv("data/weekly/{}.userdata.{:05}.csv".format(datasource,week),parse_dates=[3,4])
     for index, row in datafragment.iterrows():
       # store only users who have activity in the past 365 days 
-      # and were active more than one week
       if row['lastseen'] > lastyear:
         user=row['user']
         totalactions += row['actions']
         actioncount[user]+=row['actions']
-        # mostly, we're filtering out users not active at least 3 weeks
-        if row['weeks'] > 2:
-          firstseen[user]=row['firstseen']
-          lastseen[user]=row['lastseen']
-          weeksactive[user]=max(weeksactive[user],row['weeks'])
-          if row['firstseen'] < twoyears:
-            oldschoolornew[user]="old-school"
-          elif row['firstseen'] >= lastyear:
-            oldschoolornew[user]="new contributor"
-          else:
-            oldschoolornew[user]=""
-
-
+        # fixme: need to scan through first and count number of weeks active
+        firstseen[user]=row['firstseen']
+        lastseen[user]=row['lastseen']
+        weeksactive[user]=max(weeksactive[user],row['weeks'])
+        if row['firstseen'] < twoyears:
+          oldschoolornew[user]="old-school"
+        elif row['firstseen'] >= lastyear:
+          oldschoolornew[user]="new contributor"
+        else:
+          oldschoolornew[user]=""
 
 
 oldcount=0

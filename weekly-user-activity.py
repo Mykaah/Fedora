@@ -75,10 +75,16 @@ try:
 except OSError:
     pass
 try:
+    os.makedirs('./data/weekly')
+except OSError:
+    pass
+try:
     os.makedirs('./cache')
 except OSError:
     pass
-
+    
+   
+weeknum=0
 # the year in which fedmesg starts.
 starttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")
 
@@ -86,8 +92,7 @@ starttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")
 
 WeekActions = collections.namedtuple('WeekActions',['week','useractions','newusers','actionsbyage','nonhuman'])
 
-yeartotals={}
-yearweeks={}
+weekbreakdown={}
 firstseen={}
 lastseen={}
 
@@ -97,13 +102,12 @@ ring        = collections.deque(maxlen=13)
 with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
     f.write("weekstart,msgs1,msgs9,msgs40,msgsrest,users1,users9,users40,userrest,newusercount,newuseractions,monthuseractions,yearuseractions,olderuseractions,newspammers,spamactions,botactions,relengactions\n")
     f.flush()
+    
     while starttime < datetime.datetime.now() + datetime.timedelta(42): # weeks in the future because see below
         endtime   = starttime + datetime.timedelta(7)
         weekinfo  = WeekActions(starttime, collections.Counter(), collections.Counter(), collections.Counter(), collections.Counter())
-        if not starttime.strftime("%Y") in yeartotals:
-            yeartotals[starttime.strftime("%Y")]=collections.Counter()
-        if not starttime.strftime("%Y") in yearweeks:
-            yearweeks[starttime.strftime("%Y")]=collections.Counter()
+        if not weeknum in weekbreakdown:
+            weekbreakdown[weeknum]=collections.Counter()
 
         print "Working on %s / %s" % (discriminant, starttime.strftime("%Y-%m-%d")),
 
@@ -112,7 +116,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         if os.path.exists(msgcachefile):
 
           with open(msgcachefile,"r") as msgcache:
-            [yeartotals,firstseen,lastseen,weekinfo]=pickle.load(msgcache)
+            [weekbreakdown,firstseen,lastseen,weekinfo]=pickle.load(msgcache)
             print "(cached)"
 
         else:
@@ -164,7 +168,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                      continue
                   
                  weekinfo.useractions[user] += 1
-                 yeartotals[starttime.strftime("%Y")][user] += 1
+                 weekbreakdown[weeknum][user] += 1
                  
                  if not user in firstseen:
                      firstseen[user]=starttime # todo: make this actual first time, not first week
@@ -195,13 +199,11 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
               sys.stdout.write("Saving... ")
               sys.stdout.flush()
               with open(msgcachefile+".temp","w") as msgcache:
-                  pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
+                  pickle.dump((weekbreakdown,firstseen,lastseen,weekinfo),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
               print "saved."
 
 
-        yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
-        
         ring.append(weekinfo)
         
          
@@ -261,10 +263,11 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
 
         # and loop around
         starttime=endtime
+        weeknum+=1
 
-for year in yeartotals.keys():
-    with open('data/%s.userdata.%s.csv' % (discriminant,year), 'w') as f:
-        f.write("%s,%s,%s,%s,%s\n" % ("user","actions","weeks","firstseen","lastseen"))
-        for user in sorted(yeartotals[year], key=yeartotals[year].get, reverse=True):
-            f.write("%s,%s,%s,%s,%s\n" % (user,yeartotals[year][user],yearweeks[year][user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
+for week in weekbreakdown.keys():
+    with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,week), 'w') as f:
+        f.write("%s,%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
+        for user in sorted(weekbreakdown[week], key=weekbreakdown[week].get, reverse=True):
+            f.write("%s,%s,%s,%s,%s\n" % (user,weekbreakdown[week][user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
             
