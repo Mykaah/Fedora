@@ -62,25 +62,25 @@ fig.savefig('images/git.activity.share.svg',dpi=300)
 
 #############################################
 
-datagit['newuseractions%']=100*datagit['newuseractions']/datagit['msgstotal']
-datagit['monthuseractions%']=100*datagit['monthuseractions']/datagit['msgstotal']
-datagit['yearuseractions%']=100*datagit['yearuseractions']/datagit['msgstotal']
-datagit['olderuseractions%']=100*datagit['olderuseractions']/datagit['msgstotal']
+#datagit['newuseractions%']=100*datagit['newuseractions']/datagit['msgstotal']
+#datagit['monthuseractions%']=100*datagit['monthuseractions']/datagit['msgstotal']
+#datagit['yearuseractions%']=100*datagit['yearuseractions']/datagit['msgstotal']
+#datagit['olderuseractions%']=100*datagit['olderuseractions']/datagit['msgstotal']
 
 
 
 
-m.rcParams['legend.frameon'] = True
-graph=datagit[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
-                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
-                                                              grid=True,ylim=(0,100))
-plt.suptitle("Percent of Package Changes Each Week By Time Since Packager's First Action",fontsize=24)
-graph.set_title("",fontsize=16)
-graph.set_xlabel('')
-
-fig=graph.get_figure()
-fig.savefig('images/git.activity.length.svg',dpi=300)
-
+#m.rcParams['legend.frameon'] = True
+#graph=datagit[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
+#                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
+#                                                              grid=True,ylim=(0,100))
+#plt.suptitle("Percent of Package Changes Each Week By Time Since Packager's First Action",fontsize=24)
+#graph.set_title("",fontsize=16)
+#graph.set_xlabel('')
+#
+#fig=graph.get_figure()
+#fig.savefig('images/git.activity.length.svg',dpi=300)
+#
 ################################################################################################################
 ################################################################################################################
 
@@ -133,24 +133,24 @@ fig.savefig('images/bodhi.activity.share.svg',dpi=300)
 
 #############################################
 
-databodhi['newuseractions%']=100*databodhi['newuseractions']/databodhi['msgstotal']
-databodhi['monthuseractions%']=100*databodhi['monthuseractions']/databodhi['msgstotal']
-databodhi['yearuseractions%']=100*databodhi['yearuseractions']/databodhi['msgstotal']
-databodhi['olderuseractions%']=100*databodhi['olderuseractions']/databodhi['msgstotal']
+#databodhi['newuseractions%']=100*databodhi['newuseractions']/databodhi['msgstotal']
+#databodhi['monthuseractions%']=100*databodhi['monthuseractions']/databodhi['msgstotal']
+#databodhi['yearuseractions%']=100*databodhi['yearuseractions']/databodhi['msgstotal']
+#databodhi['olderuseractions%']=100*databodhi['olderuseractions']/databodhi['msgstotal']
 
 
 
 
-m.rcParams['legend.frameon'] = True
-graph=databodhi[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
-                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
-                                                              grid=True,ylim=(0,100))
-plt.suptitle("Percent of Update Feedback Each Week By Time Since Packager's First Action",fontsize=24)
-graph.set_title("",fontsize=16)
-graph.set_xlabel('')
-
-fig=graph.get_figure()
-fig.savefig('images/bodhi.activity.length.svg',dpi=300)
+#m.rcParams['legend.frameon'] = True
+#graph=databodhi[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
+#                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
+#                                                              grid=True,ylim=(0,100))
+#plt.suptitle("Percent of Update Feedback Each Week By Time Since Packager's First Action",fontsize=24)
+#graph.set_title("",fontsize=16)
+#graph.set_xlabel('')
+#
+#fig=graph.get_figure()
+#fig.savefig('images/bodhi.activity.length.svg',dpi=300)
 
 
 ################################################################################################################
@@ -215,24 +215,24 @@ fig.savefig('images/wiki.activity.share.svg',dpi=300)
 
 #############################################
 
-datawiki['newuseractions%']=100*datawiki['newuseractions']/datawiki['msgstotal']
-datawiki['monthuseractions%']=100*datawiki['monthuseractions']/datawiki['msgstotal']
-datawiki['yearuseractions%']=100*datawiki['yearuseractions']/datawiki['msgstotal']
-datawiki['olderuseractions%']=100*datawiki['olderuseractions']/datawiki['msgstotal']
+#datawiki['newuseractions%']=100*datawiki['newuseractions']/datawiki['msgstotal']
+#datawiki['monthuseractions%']=100*datawiki['monthuseractions']/datawiki['msgstotal']
+#datawiki['yearuseractions%']=100*datawiki['yearuseractions']/datawiki['msgstotal']
+#datawiki['olderuseractions%']=100*datawiki['olderuseractions']/datawiki['msgstotal']
 
 
 
 
-m.rcParams['legend.frameon'] = True
-graph=datawiki[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
-                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
-                                                              grid=True,ylim=(0,100))
-plt.suptitle("Percent of Wiki Edits Each Week By Time Since Editor's First Edit",fontsize=24)
-graph.set_title("",fontsize=16)
-graph.set_xlabel('')
-
-fig=graph.get_figure()
-fig.savefig('images/wiki.activity.length.svg',dpi=300)
+#m.rcParams['legend.frameon'] = True
+#graph=datawiki[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
+#                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
+#                                                              grid=True,ylim=(0,100))
+#plt.suptitle("Percent of Wiki Edits Each Week By Time Since Editor's First Edit",fontsize=24)
+#graph.set_title("",fontsize=16)
+#graph.set_xlabel('')
+#
+#fig=graph.get_figure()
+#fig.savefig('images/wiki.activity.length.svg',dpi=300)
 
 ###############################################
 ###############################################
@@ -285,21 +285,21 @@ fig.savefig('images/pagure.activity.share.svg',dpi=300)
 
 #############################################
 
-datapagure['newuseractions%']=100*datapagure['newuseractions']/datapagure['msgstotal']
-datapagure['monthuseractions%']=100*datapagure['monthuseractions']/datapagure['msgstotal']
-datapagure['yearuseractions%']=100*datapagure['yearuseractions']/datapagure['msgstotal']
-datapagure['olderuseractions%']=100*datapagure['olderuseractions']/datapagure['msgstotal']
+#datapagure['newuseractions%']=100*datapagure['newuseractions']/datapagure['msgstotal']
+#datapagure['monthuseractions%']=100*datapagure['monthuseractions']/datapagure['msgstotal']
+#datapagure['yearuseractions%']=100*datapagure['yearuseractions']/datapagure['msgstotal']
+#datapagure['olderuseractions%']=100*datapagure['olderuseractions']/datapagure['msgstotal']
 
 
 
 
-m.rcParams['legend.frameon'] = True
-graph=datapagure[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
-                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
-                                                              grid=True,ylim=(0,100))
-plt.suptitle("Percent of Pagure Commits Each Week By Time Since Packager's First Action",fontsize=24)
-graph.set_title("",fontsize=16)
-graph.set_xlabel('')
-
-fig=graph.get_figure()
-fig.savefig('images/pagure.activity.length.svg',dpi=300)
+#m.rcParams['legend.frameon'] = True
+#graph=datapagure[['newuseractions%','monthuseractions%','yearuseractions%','olderuseractions%']][42:].rename(columns={"newuseractions%": "New This Week","monthuseractions%":"New This Month","yearuseractions%":"New This Year","olderuseractions%":"Old School"}).plot.area(figsize=(16, 9),
+#                                                              color=['#579d1c','#ffd320', '#ff420e', '#004586' ],
+#                                                              grid=True,ylim=(0,100))
+#plt.suptitle("Percent of Pagure Commits Each Week By Time Since Packager's First Action",fontsize=24)
+#graph.set_title("",fontsize=16)
+#graph.set_xlabel('')
+#
+#fig=graph.get_figure()
+#fig.savefig('images/pagure.activity.length.svg',dpi=300)
