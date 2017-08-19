@@ -92,7 +92,6 @@ starttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")
 
 WeekActions = collections.namedtuple('WeekActions',['week','useractions','newusers','actionsbyage','nonhuman'])
 
-weekbreakdown={}
 firstseen={}
 lastseen={}
 
@@ -106,8 +105,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
     while starttime < datetime.datetime.now() + datetime.timedelta(42): # weeks in the future because see below
         endtime   = starttime + datetime.timedelta(7)
         weekinfo  = WeekActions(starttime, collections.Counter(), collections.Counter(), collections.Counter(), collections.Counter())
-        if not weeknum in weekbreakdown:
-            weekbreakdown[weeknum]=collections.Counter()
+        weekbreakdown=collections.Counter()
 
         print "Working on %s / %s" % (discriminant, starttime.strftime("%Y-%m-%d")),
 
@@ -116,7 +114,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         if os.path.exists(msgcachefile):
 
           with open(msgcachefile,"r") as msgcache:
-            [weekbreakdown,firstseen,lastseen,weekinfo]=pickle.load(msgcache)
+            [firstseen,lastseen,weekinfo]=pickle.load(msgcache)
             print "(cached)"
 
         else:
@@ -168,7 +166,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                      continue
                   
                  weekinfo.useractions[user] += 1
-                 weekbreakdown[weeknum][user] += 1
+                 weekbreakdown[user] += 1
                  
                  if not user in firstseen:
                      firstseen[user]=starttime # todo: make this actual first time, not first week
@@ -199,7 +197,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
               sys.stdout.write("Saving... ")
               sys.stdout.flush()
               with open(msgcachefile+".temp","w") as msgcache:
-                  pickle.dump((weekbreakdown,firstseen,lastseen,weekinfo),msgcache)
+                  pickle.dump((firstseen,lastseen,weekinfo),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
               print "saved."
 
@@ -261,13 +259,13 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                 f.write("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
                 f.flush()
 
+        with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as f:
+            f.write("%s,%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
+            for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
+                f.write("%s,%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
+
         # and loop around
         starttime=endtime
         weeknum+=1
 
-for week in weekbreakdown.keys():
-    with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,week), 'w') as f:
-        f.write("%s,%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
-        for user in sorted(weekbreakdown[week], key=weekbreakdown[week].get, reverse=True):
-            f.write("%s,%s,%s,%s,%s\n" % (user,weekbreakdown[week][user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
             
