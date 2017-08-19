@@ -98,9 +98,9 @@ lastseen={}
 # 13 weeks = 1 quarter (rolling)
 ring        = collections.deque(maxlen=13)
 
-with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
-    f.write("weekstart,msgs1,msgs9,msgs40,msgsrest,users1,users9,users40,userrest,newusercount,newuseractions,monthuseractions,yearuseractions,olderuseractions,newspammers,spamactions,botactions,relengactions\n")
-    f.flush()
+with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
+    bucketcsv.write("weekstart,msgs1,msgs9,msgs40,msgsrest,users1,users9,users40,userrest,newusercount,newuseractions,monthuseractions,yearuseractions,olderuseractions,newspammers,spamactions,botactions,relengactions\n")
+    bucketcsv.flush()
     
     while starttime < datetime.datetime.now() + datetime.timedelta(42): # weeks in the future because see below
         endtime   = starttime + datetime.timedelta(7)
@@ -256,13 +256,13 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
             print "%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions'])
 
             if any((bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4])):
-                f.write("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
-                f.flush()
+                bucketcsv.write("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
+                bucketcsv.flush()
 
-        with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as f:
-            f.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
+        with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as weekcsv:
+            weekcsv.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
             for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
-                f.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
+                weekcsv.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
         print 'Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum) 
 
         # and loop around
