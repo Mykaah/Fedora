@@ -6,6 +6,11 @@ m.rcParams['font.size'] = 12
 m.rcParams['font.family'] = 'Overpass'
 m.rcParams['legend.frameon'] = False
 
+try:
+    os.makedirs('./data')
+except OSError:
+    pass
+
 datagit=pandas.read_csv("data/org.fedoraproject.prod.git.receive.bucketed-activity.csv",parse_dates=[0])
 datagit.set_index('weekstart',inplace=True)
 
