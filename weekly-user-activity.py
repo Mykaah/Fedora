@@ -100,7 +100,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
     f.flush()
     while starttime < datetime.datetime.now() + datetime.timedelta(42): # weeks in the future because see below
         endtime   = starttime + datetime.timedelta(7)
-        weekactionsinfo  = WeekActions(starttime, collections.Counter(), collections.Counter(), collections.Counter(), collections.Counter())
+        weekinfo  = WeekActions(starttime, collections.Counter(), collections.Counter(), collections.Counter(), collections.Counter())
         if not starttime.strftime("%Y") in yeartotals:
             yeartotals[starttime.strftime("%Y")]=collections.Counter()
         if not starttime.strftime("%Y") in yearweeks:
@@ -113,7 +113,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
         if os.path.exists(msgcachefile):
 
           with open(msgcachefile,"r") as msgcache:
-            [yeartotals,firstseen,lastseen,weekactionsinfo]=pickle.load(msgcache)
+            [yeartotals,firstseen,lastseen,weekinfo]=pickle.load(msgcache)
             print "(cached)"
 
         else:
@@ -146,16 +146,16 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
 
               for user in msg['meta']['usernames']:
                  if user == 'releng':
-                     weekactionsinfo.nonhuman['relengactions'] +=1
+                     weekinfo.nonhuman['relengactions'] +=1
                      continue
                  if user in bots:
-                     weekactionsinfo.nonhuman['botactions'] +=1
+                     weekinfo.nonhuman['botactions'] +=1
                      continue
                  if user in spammers:
-                     weekactionsinfo.nonhuman['spamactions'] +=1
+                     weekinfo.nonhuman['spamactions'] +=1
                      if not user in firstseen:
                          firstseen[user]=starttime # todo: make this actual first time, not first week
-                         weekactionsinfo.nonhuman['newspammers'] +=1
+                         weekinfo.nonhuman['newspammers'] +=1
                      continue
                  if '@' in user:
                      # some msgs put email for anon users
@@ -164,21 +164,21 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                      # some msgs (wiki) put ip addr for anon users
                      continue
                   
-                 weekactionsinfo.useractions[user] += 1
+                 weekinfo.useractions[user] += 1
                  yeartotals[starttime.strftime("%Y")][user] += 1
                  
                  if not user in firstseen:
                      firstseen[user]=starttime # todo: make this actual first time, not first week
-                     weekactionsinfo.newusers['count'] += 1
+                     weekinfo.newusers['count'] += 1
                      
                  if (starttime - firstseen[user]).days < 7:
-                     weekactionsinfo.actionsbyage['new'] += 1
+                     weekinfo.actionsbyage['new'] += 1
                  elif (starttime - firstseen[user]).days < 31:
-                     weekactionsinfo.actionsbyage['month'] += 1
+                     weekinfo.actionsbyage['month'] += 1
                  elif (starttime - firstseen[user]).days < 365:
-                     weekactionsinfo.actionsbyage['year'] += 1
+                     weekinfo.actionsbyage['year'] += 1
                  else:
-                     weekactionsinfo.actionsbyage['older'] += 1
+                     weekinfo.actionsbyage['older'] += 1
                  
                  lastseen[user]=starttime
 
@@ -188,7 +188,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
                   sys.stdout.flush()
            
           print       
-          #pprint.pprint(dict(weekactionsinfo.useractions))
+          #pprint.pprint(dict(weekinfo.useractions))
          
           # don't cache the current week (may not be comlete), and definitely
           # don't cache the future weeks (certainly not complete)
@@ -196,14 +196,14 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as f:
               sys.stdout.write("Saving... ")
               sys.stdout.flush()
               with open(msgcachefile+".temp","w") as msgcache:
-                  pickle.dump((yeartotals,firstseen,lastseen,weekactionsinfo),msgcache)
+                  pickle.dump((yeartotals,firstseen,lastseen,weekinfo),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
               print "saved."
 
 
-        yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekactionsinfo.useractions))
+        yearweeks[starttime.strftime("%Y")] += collections.Counter(list(weekinfo.useractions))
         
-        quarterring.append(weekactionsinfo)
+        quarterring.append(weekinfo)
         
          
 
