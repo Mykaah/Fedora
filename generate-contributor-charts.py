@@ -20,7 +20,7 @@ data.set_index('weekstart',inplace=True)
 graph=data[['oldactive','midactive','newactive']].rename(columns={"oldactive": "Old School","midactive":"Intermediate","newactive":"New Contributors"}).plot.area(figsize=(16, 9),
                                                               color=[ '#ff420e','#ffd320',  '#579d1c' ], # '#004586'
                                                               grid=True,stacked=True ,yticks=range(0,301,25))
-data[['rawcount']].rename(columns={"rawcount": "All Contributors"}).plot(figsize=(16, 9),
+data[['rawcount']].rename(columns={"rawcount": "All Contributors\nincluding less active"}).plot(figsize=(16, 9),
                                                               ax=graph ,yticks=range(0,301,25))
                                                               
 graph.xaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
