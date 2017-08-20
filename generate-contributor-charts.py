@@ -24,11 +24,23 @@ data[['rawcount']].rename(columns={"rawcount": "All Contributors"}).plot(figsize
                                                               ax=graph ,yticks=range(0,301,25))
                                                               
                                                               
-#graph.legend(ncol=4)
-# totally abusing this.
 plt.suptitle("Fedora Contributors by Week",fontsize=24)
-graph.set_title("Stacked graph of contributors with activity this week and at least two other weeks in the last year.\nOld school contributors have been active for longer than two years; new contributors, less than one.\nBlue line shows all contributors active this week regardless of amount of other activity.",fontsize=12)
+graph.set_title("Stacked graph of contributors with measured activity this week and at least two other weeks in the last year.\nOld school contributors have been active for longer than two years; new contributors, less than one.\nBlue line shows all contributors active this week regardless of amount of other activity.",fontsize=12)
 graph.set_xlabel('')
 fig=graph.get_figure()
 fig.savefig('images/active-contributors-by-week.svg',dpi=300)
+
+
+
+
+graph=data[['oldcore','midcore','newcore']].rename(columns={"oldcore": "Old School","midcore":"Intermediate","newcore":"New Contributors"}).plot.area(figsize=(16, 9),
+                                                              color=[ '#ffd320', '#ff420e', '#579d1c' ], # '#004586'
+                                                              grid=True,stacked=True ,yticks=range(0,301,25))
+                                                              
+
+plt.suptitle("Core Fedora Contributors by Week",fontsize=24)
+graph.set_title("Stacked graph of contributors with measured activity this week and at least two other weeks in the last year.\nOld school contributors have been active for longer than two years; new contributors, less than one.\n“Core” means part of the set doing about ⅔s of all actions over the past year.",fontsize=12)
+graph.set_xlabel('')
+fig=graph.get_figure()
+fig.savefig('images/active-core-contributors-by-week.svg',dpi=300)
 
