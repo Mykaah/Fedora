@@ -126,7 +126,7 @@ for user in oldschoolornew:
 
 if csvoutput:
   if csvheader:
-    print("week,rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
+    print("weekstart,rawcount,oldactive,midactive,newactive,oldcore,midcore,newcore")
   print("{0:%Y-%m-%d}".format(reporttime),rawcount,
         oldcount,midcount,newcount,
         oldcore,midcore,newcore,
