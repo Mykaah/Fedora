@@ -69,13 +69,13 @@ for datasource in datasources:
 
       if not user in firstseen:
         firstseen[user]=row['firstseen']
-      else
+      else:
         if row['firstseen'] < firstseen[user]:
           firstseen[user]=row['firstseen']
 
       if not user in lastseen:
         lastseen[user]=row['lastseen']
-      else
+      else:
         if row['lastseen'] < lastseen[user]:
           lastseen[user]=row['lastseen']
           
