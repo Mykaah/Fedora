@@ -134,7 +134,7 @@ if csvoutput:
   sys.exit(0)
 
       
-print ("Report for {0:%Y-%m-%d}:".format(reporttime))
+print ("Report for year ending the week of {0:%Y-%m-%d}:".format(reporttime))
 print ("")
 print ("Total active contributors:  {:>5}".format(allactive))   
 print ("Core contributors (⅔):      {:>5}".format(len(topusers)))
