@@ -46,7 +46,8 @@ weeks = range(reportweek-51,reportweek+1)
 datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
                 "org.fedoraproject.prod.irc.karma",
-                "org.fedoraproject.prod.wiki.article.edit")
+                "org.fedoraproject.prod.wiki.article.edit",
+                "org.fedoraproject.prod.infragit.receive")
 
 for datasource in datasources:
   for week in weeks:
@@ -149,7 +150,7 @@ print ("Intermediate core contributors:{:>5}".format(midcore))
 print ("New core contributors:         {:>5}".format(newcore))
 print ("\n")
 print ("This report is an aggregate of dist-git, bodhi karma, wiki edits,")
-print ("and irc cookies. It doesn't measure all Fedora activity.")
+print ("infra git, and irc cookies. It doesn't measure all Fedora activity.")
 print ("")
 print ("Active means at least 3 separate weeks of activity.")
 print ("Core means part of the set doing about ⅔s of all actions.")
