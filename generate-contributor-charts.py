@@ -19,9 +19,9 @@ data.set_index('weekstart',inplace=True)
 
 graph=data[['oldactive','midactive','newactive']].rename(columns={"oldactive": "Old School","midactive":"Intermediate","newactive":"New Contributors"}).plot.area(figsize=(16, 9),
                                                               color=[ '#ff420e','#ffd320',  '#579d1c' ], # '#004586'
-                                                              grid=True,stacked=True ,yticks=range(0,301,25))
+                                                              grid=True,stacked=True ,yticks=range(0,451,25))
 data[['rawcount']].rename(columns={"rawcount": "All Contributors\nincluding less active"}).plot(figsize=(16, 9),
-                                                              ax=graph ,yticks=range(0,301,25))
+                                                              ax=graph ,yticks=range(0,426,25))
                                                               
 graph.xaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
 graph.yaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
@@ -37,7 +37,7 @@ fig.savefig('images/active-contributors-by-week.svg',dpi=300)
 
 graph=data[['oldcore','midcore','newcore']].rename(columns={"oldcore": "Old School","midcore":"Intermediate","newcore":"New Contributors"}).plot.area(figsize=(16, 9),
                                                               color=[  '#ff420e', '#ffd320', '#579d1c' ], # '#004586'
-                                                              grid=True,stacked=True ,yticks=range(0,301,25))
+                                                              grid=True,stacked=True ,yticks=range(0,101,25))
                                                               
 graph.xaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
 graph.yaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
