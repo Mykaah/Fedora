@@ -259,11 +259,14 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                 bucketcsv.write("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
                 bucketcsv.flush()
 
-        with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as weekcsv:
-            weekcsv.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
-            for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
-                weekcsv.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
-        print 'Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum) 
+
+        # unless we're in the future, save the weekly userdata csv
+        if starttime < datetime.datetime.now():
+            with open('data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum), 'w') as weekcsv:
+                weekcsv.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
+                for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
+                    weekcsv.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
+            print 'Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum) 
 
         # and loop around
         starttime=endtime
