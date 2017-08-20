@@ -47,7 +47,10 @@ datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
                 "org.fedoraproject.prod.irc.karma",
                 "org.fedoraproject.prod.wiki.article.edit",
-                "org.fedoraproject.prod.infragit.receive")
+                "org.fedoraproject.prod.infragit.receive",
+                "io.pagure.prod.pagure.git.receive",
+                "io.pagure.prod.pagure.issue.new"
+                )
 
 for datasource in datasources:
   for week in weeks:
@@ -79,9 +82,9 @@ for datasource in datasources:
         if row['lastseen'] < lastseen[user]:
           lastseen[user]=row['lastseen']
           
-      if row['firstseen'] < twoyears:
+      if firstseen[user] < twoyears:
         oldschoolornew[user]="old-school"
-      elif row['firstseen'] >= lastyear:
+      elif firstseen[user] >= lastyear:
         oldschoolornew[user]="new contributor"
       else:
         oldschoolornew[user]=""
