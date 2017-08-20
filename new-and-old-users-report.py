@@ -67,9 +67,18 @@ for datasource in datasources:
         weeksactive[user]=set()
       weeksactive[user].add(week)
 
-      firstseen[user]=row['firstseen']
-      lastseen[user]=row['lastseen']
+      if not user in firstseen:
+        firstseen[user]=row['firstseen']
+      else
+        if row['firstseen'] < firstseen[user]:
+          firstseen[user]=row['firstseen']
 
+      if not user in lastseen:
+        lastseen[user]=row['lastseen']
+      else
+        if row['lastseen'] < lastseen[user]:
+          lastseen[user]=row['lastseen']
+          
       if row['firstseen'] < twoyears:
         oldschoolornew[user]="old-school"
       elif row['firstseen'] >= lastyear:
