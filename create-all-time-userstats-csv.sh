@@ -5,8 +5,8 @@
 
 # start on week 156, which is the end of 2014, because first-seen dates start in the end of 2012 because
 # that's when fedmsg starts. So the old-vs-mid-vs-new metrics are only really meaningful starting two years
-# after that.
-STARTWEEK=157
+# after that. (Actually, push back to 158 because the data looks ugly with low points before that.)
+STARTWEEK=158
 
 ENDWEEK=$(( ( $(date +'%s') - $(date -ud '2012-01-01 0:0:0' +'%s') )/60/60/24/7 -1 ))
 
