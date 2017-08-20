@@ -47,9 +47,7 @@ datasources = ( "org.fedoraproject.prod.bodhi.update.comment",
                 "org.fedoraproject.prod.git.receive",
                 "org.fedoraproject.prod.irc.karma",
                 "org.fedoraproject.prod.wiki.article.edit",
-                "org.fedoraproject.prod.infragit.receive",
-                "io.pagure.prod.pagure.git.receive",
-                "io.pagure.prod.pagure.issue.new"
+                "org.fedoraproject.prod.infragit.receive"
                 )
 
 for datasource in datasources:
