@@ -27,7 +27,7 @@ graph.xaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
 graph.yaxis.grid(True, which='major', linestyle='-', linewidth=0.25)
 
 plt.suptitle("Fedora Contributors by Week",fontsize=24)
-graph.set_title("Stacked graph of contributors with measured activity this week and at least two other weeks in the last year.\nOld school contributors have been active for longer than two years; new contributors, less than one.\nBlue line shows all contributors active this week regardless of amount of other activity.",fontsize=12)
+graph.set_title("Stacked graph of contributors with measured activity each week — and at least two other weeks in the last year.\n“Old school” contributors have been active for longer than two years; new contributors, less than one.\nBlue line shows all contributors active this week regardless of amount of other activity.",fontsize=12)
 graph.set_xlabel('')
 fig=graph.get_figure()
 fig.savefig('images/active-contributors-by-week.svg',dpi=300)
