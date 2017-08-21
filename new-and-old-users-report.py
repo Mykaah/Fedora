@@ -20,7 +20,7 @@ totalactions = 0
 n = len(sys.argv[1:])
 csvoutput=False
 if n == 0:
-  reportweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)
+  reportweek = int((datetime.datetime.now()-datetime.datetime.strptime("2012-01-01", "%Y-%m-%d")).days/7)-1
 elif n == 1:
    reportweek=int(sys.argv[1])
 elif sys.argv[1] == "--csv":
@@ -36,7 +36,7 @@ else:
 
 
 
-reporttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.timedelta(reportweek*7)
+reporttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.timedelta(days=reportweek*7+6)
 # 52 weeks is precise enough for metrics gathering :)
 lastyear = reporttime - datetime.timedelta(364)
 twoyears = reporttime - datetime.timedelta(728)
@@ -145,7 +145,7 @@ if csvoutput:
   sys.exit(0)
 
       
-print ("Report for year ending the week of {0:%Y-%m-%d}:".format(reporttime))
+print ("Report for year ending {:%Y-%m-%d} (through week #{}):".format(reporttime,reportweek))
 print ("")
 print ("Raw total contributors:        {:>5}".format(rawcount))   
 print ("Total active contributors:     {:>5}".format(allactive))   
