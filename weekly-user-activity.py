@@ -155,7 +155,9 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                  if user in spammers:
                      weekinfo.nonhuman['spamactions'] +=1
                      if not user in firstseen:
-                         firstseen[user]=starttime # todo: make this actual first time, not first week
+                         print "New", user, "timestamp ", msg['timestamp']
+                         #firstseen[user]=starttime # todo: make this actual first time, not first week
+                         firstseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
                          weekinfo.nonhuman['newspammers'] +=1
                      continue
                  if '@' in user:
