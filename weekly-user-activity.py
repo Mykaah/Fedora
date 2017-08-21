@@ -155,8 +155,6 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                  if user in spammers:
                      weekinfo.nonhuman['spamactions'] +=1
                      if not user in firstseen:
-                         print "New", user, "timestamp ", msg['timestamp']
-                         #firstseen[user]=starttime # todo: make this actual first time, not first week
                          firstseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
                          weekinfo.nonhuman['newspammers'] +=1
                      continue
@@ -171,8 +169,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                  weekbreakdown[user] += 1
                  
                  if not user in firstseen:
-                     firstseen[user]=starttime # todo: make this actual first time, not first week
-                     weekinfo.newusers['count'] += 1
+                    firstseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
                      
                  if (starttime - firstseen[user]).days < 7:
                      weekinfo.actionsbyage['new'] += 1
@@ -183,7 +180,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                  else:
                      weekinfo.actionsbyage['older'] += 1
                  
-                 lastseen[user]=starttime
+                 lastseen[user]=firstseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
 
               
               if i % 50 == 0:
