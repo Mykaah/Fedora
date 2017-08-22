@@ -180,7 +180,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                  else:
                      weekinfo.actionsbyage['older'] += 1
                  
-                 lastseen[user]=firstseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
+                 lastseen[user]=datetime.datetime.fromtimestamp(msg['timestamp'])
 
               
               if i % 50 == 0:
