@@ -168,7 +168,7 @@ print ("Old-school contributors started at least two years (104 weeks) ago.")
 print ("New contributors are new in the past 52 weeks.")
 print ("Note that by this metric, \"mattdm\" is not a core contributor.")
 
-#print ("\n-------------------------------------------\n")
-#
-#for user in topusers:
-#  print("{:20} {}".format(user,oldschoolornew[user]))
+print ("\n-------------------------------------------\n")
+
+for user in topusers:
+  print("{:20} {}".format(user,oldschoolornew[user]))
