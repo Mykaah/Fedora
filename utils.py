@@ -29,8 +29,8 @@ def grep(tries=0, **kwargs):
                     else:
                         raise
             except ValueError as error:
-                print "Value Error in json.. retrying %s" % (attempt)
-                print error
+                print("Value Error in json.. retrying %s" % (attempt))
+                print(error)
             else:
                 break
         else:

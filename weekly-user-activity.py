@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # input: a fedmsg topic which has ['meta']['usernames']
 #
@@ -22,7 +22,7 @@ import utils
 
 import fedmsg.meta
 import fedmsg.config
-config = fedmsg.config.load_config()
+config = fedmsg.config.load_config(filenames=['fedmsgconfig.py'])
 fedmsg.meta.make_processors(**config)
 
 
@@ -39,10 +39,20 @@ import re
 import collections
 import pprint
 
-import cPickle as pickle
+import pickle
 
 #logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.ERROR)
+
+
+class TimeoutError(Exception):
+    """too much timeout"""
+    pass
+
+class InvalidDiscriminantError(Exception):
+    """invalid discriminant"""
+    pass
+
 
 spammers = [line.rstrip('\n') for line in open('badpeople.list')]
 bots     = [line.rstrip('\n') for line in open('bots.list')]
@@ -53,15 +63,15 @@ ipaddrre = re.compile("^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
 
 discriminant = sys.argv[-1]
 if __file__.split('/')[-1] in discriminant:
-    print "usage: '$ ./weekly-user-activity.py TOPIC'"
+    print("usage: '$ ./weekly-user-activity.py TOPIC'")
     sys.exit(1)
     
 if not re.match("^[a-z\.]*$", discriminant):
-    print "bad discriminant"
+    print("bad discriminant")
     sys.exit(2)
 
 
-print "operating with discriminant", discriminant
+print("operating with discriminant", discriminant)
 
 verboten = [
     'org.fedoraproject.prod.buildsys.rpm.sign',
@@ -107,7 +117,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
         weekinfo  = WeekActions(starttime, collections.Counter(), collections.Counter(), collections.Counter(), collections.Counter())
         weekbreakdown=collections.Counter()
 
-        print "Working on %s / %s" % (discriminant, starttime.strftime("%Y-%m-%d")),
+        print("Working on %s / %s" % (discriminant, starttime.strftime("%Y-%m-%d")),)
 
         msgcachefile = "cache/" + discriminant + "." + starttime.strftime("%Y-%m-%d") + ".pickle"
         
@@ -115,7 +125,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
 
           with open(msgcachefile,"r") as msgcache:
             [firstseen,lastseen,weekinfo,weekbreakdown]=pickle.load(msgcache)
-            print "(cached)"
+            print("(cached)")
 
         else:
         
@@ -133,17 +143,17 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                       not_topic=verboten,
                   )
               except IOError:
-                  print "Retrying."
+                  print("Retrying.")
                   time.sleep(5)
               else:
                   break
           else:
-              raise "too much timeout"
+              raise TimeoutError("too much timeout")
 
           for i, msg in enumerate(messages):
               # sanity check
               if msg['topic'] in verboten:
-                  raise "hell"
+                  raise InvalidDiscriminantError("hell")
 
               for user in msg['meta']['usernames']:
                  if user == 'releng':
@@ -187,7 +197,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                   sys.stdout.write(".")
                   sys.stdout.flush()
            
-          print       
+          print()      
           #pprint.pprint(dict(weekinfo.useractions))
          
           # don't cache the current week (may not be comlete), and definitely
@@ -195,10 +205,10 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
           if endtime < (datetime.datetime.now() - datetime.timedelta(1)) :
               sys.stdout.write("Saving... ")
               sys.stdout.flush()
-              with open(msgcachefile+".temp","w") as msgcache:
+              with open(msgcachefile+".temp","wb") as msgcache:
                   pickle.dump((firstseen,lastseen,weekinfo,weekbreakdown),msgcache)
               os.rename(msgcachefile+".temp",msgcachefile)
-              print "saved."
+              print("saved.")
 
 
         ring.append(weekinfo)
@@ -252,7 +262,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                 bucketscores[userbucket[username]] +=  workweek.useractions[username]
                 bucketcount[userbucket[username]]  +=  1
               
-            print "%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions'])
+            print("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
 
             if any((bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4])):
                 bucketcsv.write("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n" % (workweek.week.strftime('%Y-%m-%d'), bucketscores[1], bucketscores[2], bucketscores[3], bucketscores[4], bucketcount[1], bucketcount[2], bucketcount[3], bucketcount[4],workweek.newusers['count'],workweek.actionsbyage['new'],workweek.actionsbyage['month'],workweek.actionsbyage['year'],workweek.actionsbyage['older'],workweek.nonhuman['newspammers,'],workweek.nonhuman['spamactions,'], workweek.nonhuman['botactions'], workweek.nonhuman['relengactions']))
@@ -265,7 +275,7 @@ with open('data/%s.bucketed-activity.csv' % (discriminant), 'w') as bucketcsv:
                 weekcsv.write("%s,%s,%s,%s\n" % ("user","actions","firstseen","lastseen"))
                 for user in sorted(weekbreakdown, key=weekbreakdown.get, reverse=True):
                     weekcsv.write("%s,%s,%s,%s\n" % (user,weekbreakdown[user],firstseen[user].strftime('%Y-%m-%d'),lastseen[user].strftime('%Y-%m-%d')))
-            print 'Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum) 
+            print('Wrote data/weekly/%s.userdata.%05d.csv' % (discriminant,weeknum))
 
         # and loop around
         starttime=endtime
