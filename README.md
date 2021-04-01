@@ -5,9 +5,10 @@ the ["datagrepper" service](https://apps.fedoraproject.org/datagrepper/).
 Results are currently run on a personal system belonging to Matthew Miller,
 and published weekly there: https://mattdm.org/fedora/fedora-contributor-trends/
 
-![contributors by week !chart](https://mattdm.org/fedora/fedora-contributor-trends/active-contributors-by-week.svg =300x)
-
 There's also a text report: https://mattdm.org/fedora/fedora-contributor-trends/report.txt
+
+You may also want to watch talk at DevConf 2016 where these metrics were
+first presented: https://mattdm.org/fedora/2016devconf/
 
 ----
 
@@ -61,10 +62,6 @@ Some things that aren't well-explored but could be:
 
 One thing that's an explicit non-goal: anything that is easily tied to a specific individual in the results, except maybe for very high level totals.
 
----- 
-
-Worth watching? My talk at DevConf 2016 where these metrics were first
-presented: https://mattdm.org/fedora/2016devconf/
 
 ----
 
