@@ -5,7 +5,7 @@ the ["datagrepper" service](https://apps.fedoraproject.org/datagrepper/).
 Results are currently run on a personal system belonging to Matthew Miller,
 and published weekly there: https://mattdm.org/fedora/fedora-contributor-trends/
 
-![contributors by week !chart](https://mattdm.org/fedora/fedora-contributor-trends/active-contributors-by-week.svg)
+![contributors by week !chart](https://mattdm.org/fedora/fedora-contributor-trends/active-contributors-by-week.svg =300x)
 
 There's also a text report: https://mattdm.org/fedora/fedora-contributor-trends/report.txt
 
