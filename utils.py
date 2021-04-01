@@ -1,6 +1,7 @@
 import requests
 
-url = 'https://apps.fedoraproject.org/datagrepper/raw'
+url = "https://apps.fedoraproject.org/datagrepper/raw"
+
 
 def grep(tries=0, **kwargs):
     response = requests.get(url, params=kwargs)
@@ -11,15 +12,15 @@ def grep(tries=0, **kwargs):
             yield item
 
     data = response.json()
-    pages = data['pages']
+    pages = data["pages"]
 
-    for message in data['raw_messages']:
+    for message in data["raw_messages"]:
         yield message
 
     for page in range(1, pages):
         for attempt in range(20):
             try:
-                kwargs['page'] = page
+                kwargs["page"] = page
                 response = requests.get(url, params=kwargs)
                 try:
                     data = response.json()
@@ -35,7 +36,5 @@ def grep(tries=0, **kwargs):
                 break
         else:
             raise ValueError("Ran out of retries")
-        for message in data.get('raw_messages', []):
+        for message in data.get("raw_messages", []):
             yield message
-
-
