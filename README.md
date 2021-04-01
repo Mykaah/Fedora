@@ -32,7 +32,7 @@ six main areas looking for improvement:
 
 
 
-1. The Fedora Message bus is in the midst of transitioning to new technology, which may make the way the current script gets data obsolete. See https://lists.fedoraproject.org/archives/list/infrastructure@lists.fedoraproject.org/message/6NRUH7EP6ERTBUEVTTXYLA25QUSHTKBE/ for possible plans. The upside is that some of the new options could be much better; the current code hits the server very hard.
+1. The Fedora Message bus is in the midst of transitioning to new technology, which may make the way the current script gets data obsolete. See [this mailing list post](https://lists.fedoraproject.org/archives/list/infrastructure@lists.fedoraproject.org/message/6NRUH7EP6ERTBUEVTTXYLA25QUSHTKBE/) for possible plans. The upside is that some of the new options could be much better; the current code hits the server very hard.
 2. The code really is hacky and ugly. It could use refactoring and beautification.
 3. There are some data sources we're not using and could be: there are messages from pagure and will be ones from discourse that would be excellent candidates.
 4. The visualizations I created for my presentation in 2016 are nice, but there are many other ways to look at the data. Come up with new ways to look at it which may show more insights.
