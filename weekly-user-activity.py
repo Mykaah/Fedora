@@ -134,7 +134,7 @@ with open("data/%s.bucketed-activity.csv" % (discriminant), "w") as bucketcsv:
 
         if os.path.exists(msgcachefile):
 
-            with open(msgcachefile, "r") as msgcache:
+            with open(msgcachefile, "rb") as msgcache:
                 [firstseen, lastseen, weekinfo, weekbreakdown] = pickle.load(msgcache)
                 print("(cached)")
 
