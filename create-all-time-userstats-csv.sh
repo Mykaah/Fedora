@@ -10,8 +10,8 @@ STARTWEEK=158
 
 ENDWEEK=$(( ( $(date +'%s') - $(date -ud '2012-01-01 0:0:0' +'%s') )/60/60/24/7 -1 ))
 
-./new-and-old-users-report.py --csvh $(( $STARTWEEK - 1 )) | tee data/contributor-count.csv
+python new-and-old-users-report.py --csvh $(( $STARTWEEK - 1 )) | tee data/contributor-count.csv
 for week in $(seq $STARTWEEK $ENDWEEK ); do
-  ./new-and-old-users-report.py --csv $week | tee -a data/contributor-count.csv
+  python new-and-old-users-report.py --csv $week | tee -a data/contributor-count.csv
 done
 
