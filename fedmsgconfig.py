@@ -1,1 +1,1 @@
-config = {'endpoints': {}}
+config = {"endpoints": {}}
