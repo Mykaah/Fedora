@@ -46,7 +46,7 @@ graph.yaxis.grid(True, which="major", linestyle="-", linewidth=0.25)
 
 plt.suptitle("Fedora Contributors by Week", fontsize=24)
 graph.set_title(
-    "Stacked graph of contributors with measured activity each week — and at least thirteen weeks total in the last year.\n"
+    "Stacked graph of contributors with measured activity each week — and at least 13 weeks total in the last year.\n"
     "“Old school” contributors have been active for longer than two years; new contributors, less than one.\n"
     "Blue line shows all contributors active this week regardless of amount of other activity.",
     fontsize=12,
@@ -80,7 +80,7 @@ graph.yaxis.grid(True, which="major", linestyle="-", linewidth=0.25)
 
 plt.suptitle("Core Fedora Contributors by Week", fontsize=24)
 graph.set_title(
-    "Stacked graph of contributors with measured activity this week — and at least thirteen weeks total in the last year.\n"
+    "Stacked graph of contributors with measured activity this week — and at least 13 weeks total in the last year.\n"
     "Old school contributors have been active for longer than two years; new contributors, less than one.\n"
     "“Core” means part of the set doing about ⅔s of all actions over the past year.",
     fontsize=12,
