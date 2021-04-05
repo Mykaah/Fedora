@@ -91,15 +91,16 @@ for datasource in datasources:
             if user not in lastseen:
                 lastseen[user] = row["lastseen"]
             else:
-                if row["lastseen"] < lastseen[user]:
+                if row["lastseen"] > lastseen[user]:
                     lastseen[user] = row["lastseen"]
 
-            if firstseen[user] < twoyears:
-                oldschoolornew[user] = "old-school"
-            elif firstseen[user] >= lastyear:
-                oldschoolornew[user] = "new contributor"
-            else:
-                oldschoolornew[user] = ""
+for user in weeksactive.keys():
+    if firstseen[user] < twoyears:
+        oldschoolornew[user] = "old-school"
+    elif firstseen[user] < lastyear:
+        oldschoolornew[user] = "intermediate"
+    elif firstseen[user] >= lastyear:
+        oldschoolornew[user] = "new contributor"
 
 rawcount = 0
 oldcount = 0
