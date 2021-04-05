@@ -49,7 +49,7 @@ reporttime = datetime.datetime.strptime("2012-01-01", "%Y-%m-%d") + datetime.tim
 )
 # 52 weeks is precise enough for metrics gathering :)
 lastyear = reporttime - datetime.timedelta(364)
-twoyears = reporttime - datetime.timedelta(728)
+threeyears = reporttime - datetime.timedelta(1092)
 
 weeks = range(reportweek - 51, reportweek + 1)
 
@@ -95,7 +95,7 @@ for datasource in datasources:
                     lastseen[user] = row["lastseen"]
 
 for user in weeksactive.keys():
-    if firstseen[user] < twoyears:
+    if firstseen[user] < threeyears:
         oldschoolornew[user] = "old-school"
     elif firstseen[user] < lastyear:
         oldschoolornew[user] = "intermediate"
@@ -191,7 +191,7 @@ print("infra git, and irc cookies. It doesn't measure all Fedora activity.")
 print("")
 print("Active means at least thirteen separate weeks of activity.")
 print("Core means part of the set doing about ⅔s of all actions.")
-print("Old-school contributors started at least two years (104 weeks) ago.")
+print("Old-school contributors started at least three years (156 weeks) ago.")
 print("New contributors are new in the past 52 weeks.")
 print('Note that by this metric, "mattdm" is not a core contributor.')
 
