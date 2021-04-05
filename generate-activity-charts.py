@@ -26,8 +26,8 @@ graph = (
     .rename(
         columns={
             "users1": "Top 1%",
-            "users9": "Top 9%",
-            "users40": "Top 40%",
+            "users9": "Next 9%",
+            "users40": "Next 40%",
             "userrest": "Remaining 50%",
         }
     )
@@ -61,8 +61,8 @@ graph = (
     .rename(
         columns={
             "msgs1%": "Top 1%",
-            "msgs9%": "Top 9%",
-            "msgs40%": "Top 40%",
+            "msgs9%": "Next 9%",
+            "msgs40%": "Next 40%",
             "msgsrest%": "Remaining 50%",
         }
     )
@@ -129,8 +129,8 @@ graph = (
     .rename(
         columns={
             "users1": "Top 1%",
-            "users9": "Top 9%",
-            "users40": "Top 40%",
+            "users9": "Next 9%",
+            "users40": "Next 40%",
             "userrest": "Remaining 50%",
         }
     )
@@ -167,8 +167,8 @@ graph = (
     .rename(
         columns={
             "msgs1%": "Top 1%",
-            "msgs9%": "Top 9%",
-            "msgs40%": "Top 40%",
+            "msgs9%": "Next 9%",
+            "msgs40%": "Next 40%",
             "msgsrest%": "Remaining 50%",
         }
     )
@@ -235,8 +235,8 @@ graph = (
     .rename(
         columns={
             "users1": "Top 1%",
-            "users9": "Top 9%",
-            "users40": "Top 40%",
+            "users9": "Next 9%",
+            "users40": "Next 40%",
             "userrest": "Remaining 50%",
         }
     )
@@ -270,8 +270,8 @@ graph = (
     .rename(
         columns={
             "msgs1%": "Top 1%",
-            "msgs9%": "Top 9%",
-            "msgs40%": "Top 40%",
+            "msgs9%": "Next 9%",
+            "msgs40%": "Next 40%",
             "msgsrest%": "Remaining 50%",
         }
     )
@@ -345,8 +345,8 @@ graph = (
     .rename(
         columns={
             "users1": "Top 1%",
-            "users9": "Top 9%",
-            "users40": "Top 40%",
+            "users9": "Next 9%",
+            "users40": "Next 40%",
             "userrest": "Remaining 50%",
         }
     )
@@ -380,8 +380,8 @@ graph = (
     .rename(
         columns={
             "msgs1%": "Top 1%",
-            "msgs9%": "Top 9%",
-            "msgs40%": "Top 40%",
+            "msgs9%": "Next 9%",
+            "msgs40%": "Next 40%",
             "msgsrest%": "Remaining 50%",
         }
     )
