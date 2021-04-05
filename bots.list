@@ -35,10 +35,13 @@ mingwmaint
 mono-sig
 ocamlmaint
 orphan
+packagerbot
 packaging-team
+pagure
 pcp-upstream
 perl-sig
 retired
+rhcontainerbot
 root
 rube
 systemd-maint
