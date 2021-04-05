@@ -129,8 +129,8 @@ for user in oldschoolornew:
     rawcount += 1
 
     # only count users who are active
-    # at least 4 distinct weeks in the past year
-    if len(weeksactive[user]) < 4:
+    # at least 13 distinct weeks in the past year
+    if len(weeksactive[user]) < 13:
         continue
 
     allactive += 1
@@ -188,7 +188,7 @@ print("\n")
 print("This report is an aggregate of dist-git, bodhi karma, wiki edits,")
 print("infra git, and irc cookies. It doesn't measure all Fedora activity.")
 print("")
-print("Active means at least four separate weeks of activity.")
+print("Active means at least thirteen separate weeks of activity.")
 print("Core means part of the set doing about ⅔s of all actions.")
 print("Old-school contributors started at least two years (104 weeks) ago.")
 print("New contributors are new in the past 52 weeks.")
