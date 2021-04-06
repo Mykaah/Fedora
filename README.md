@@ -18,19 +18,17 @@ To get started, clone this repo and run `./run.sh`. You'll need the package
 Note that this will try to gather data going back to the beginning of the
 message bus, which is a long time and a lot of data, and it hits the service
 pretty hard in doing so. The weekly data is therefore cached, so on later
-runs only the last week is re-loaded. The first run may time out a lot and
-even take several days to finish. This isn't ideal, of course, but it got me
-up and running.
+runs only the last week is re-loaded. **The first run may time out a lot and
+even take several days to finish.** This isn't ideal, of course, but it got
+me up and running. See [this
+issue](https://pagure.io/fedora-contributor-trends/issue/16) for ideas on
+how this bootstrap might be made better.
 
-You'll see that theme a lot here -- this is a sysadmin-hack kind of project,
-not an elegant software engineer one.
-
-----
+Anyway, you'll see that theme a lot here -- this is a sysadmin-hack kind of
+project, not an elegant software engineer one.
 
 But that's not the end! I'd love for this to be better. In fact, there are
 six main areas looking for improvement:
-
-
 
 1. The Fedora Message bus is in the midst of transitioning to new technology, which may make the way the current script gets data obsolete. See [this mailing list post](https://lists.fedoraproject.org/archives/list/infrastructure@lists.fedoraproject.org/message/6NRUH7EP6ERTBUEVTTXYLA25QUSHTKBE/) for possible plans. The upside is that some of the new options could be much better; the current code hits the server very hard.
 2. The code really is hacky and ugly. It could use refactoring and beautification.
@@ -40,6 +38,8 @@ six main areas looking for improvement:
 6. Simply put, the graphs and reports could be prettier.
 
 Any or all of these things would be an huge improvement.
+
+----
 
 I originally designed this to answer these questions:
 
