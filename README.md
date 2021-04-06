@@ -24,8 +24,8 @@ me up and running. See [this
 issue](https://pagure.io/fedora-contributor-trends/issue/16) for ideas on
 how this bootstrap might be made better.
 
-Anyway, you'll see that theme a lot here -- this is a sysadmin-hack kind of
-project, not an elegant software engineer one.
+Anyway, you'll see that theme a lot here -- this started as a sysadmin-hack
+kind of project, not an elegant software-engineer one.
 
 But that's not the end! I'd love for this to be better. In fact, there are
 six main areas looking for improvement:
