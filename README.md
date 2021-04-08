@@ -11,29 +11,30 @@ You may also want to watch talk at DevConf 2016 where these metrics were
 first presented: https://mattdm.org/fedora/2016devconf/
 
 ----
+
 ### Get started
 To get started you must have `python3` installed, after that, clone this repo and follow the instructions below:
 
-1. Create one virtual environment and activate it
+* Create one virtual environment and activate it
 
 Linux/MacOS
 ```
   python3 -m venv .venv
-  source .venv/bin/active
+  source .venv/bin/activate
 ```
 Windows
 ```
   python3 -m venv .venv
-  .venv/bin/active.bat
+  .venv/bin/activate.bat
 ```
 
-2. Install the requirements of the project in the environment
+* Install the requirements of the project in the environment
 
 ```
   pip install -r requirements.txt
 ```
 
-3. Run the project
+* Run the project
 ```
   ./run.sh
 ```
@@ -91,7 +92,7 @@ One thing that's an explicit non-goal: anything that is easily tied to a specifi
 ### Contributions
 Before you push any changes or improvements remember in order to follow the rules PEP8 you must run the style code tools
 
-1. Running `flake8`
+* Running `flake8`
 
 all project
 ```
@@ -102,9 +103,10 @@ or a single file
 ```
   flake8 my_python_file.py
 ```
-**NOTE** you must resolve any errors that show
+**NOTE** you must resolve any errors that show `flake8`
 
-2. Running `black`
+
+* Running `black`
 
 all project
 ```
