@@ -11,9 +11,32 @@ You may also want to watch talk at DevConf 2016 where these metrics were
 first presented: https://mattdm.org/fedora/2016devconf/
 
 ----
+### Get started
+To get started you must have `python3` installed, after that, clone this repo and follow the instructions below:
 
-To get started, clone this repo and run `./run.sh`. You'll need the package
-`python-fedmsg` installed.
+1. Create one virtual environment and activate it
+
+Linux/MacOS
+```
+  python3 -m venv .venv
+  source .venv/bin/active
+```
+Windows
+```
+  python3 -m venv .venv
+  .venv/bin/active.bat
+```
+
+2. Install the requirements of the project in the environment
+
+```
+  pip install -r requirements.txt
+```
+
+3. Run the project
+```
+  ./run.sh
+```
 
 Note that this will try to gather data going back to the beginning of the
 message bus, which is a long time and a lot of data, and it hits the service
@@ -37,7 +60,8 @@ six main areas looking for improvement:
 5. Find an official place for this to run rather than on mattdm's personal server.
 6. Simply put, the graphs and reports could be prettier.
 
-Any or all of these things would be an huge improvement.
+Any or all of these things would be a huge improvement.
+
 
 ----
 
@@ -62,7 +86,34 @@ Some things that aren't well-explored but could be:
 
 One thing that's an explicit non-goal: anything that is easily tied to a specific individual in the results, except maybe for very high level totals.
 
-
 ----
+
+### Contributions
+Before you push any changes or improvements remember in order to follow the rules PEP8 you must run the style code tools
+
+1. Running `flake8`
+
+all project
+```
+  flake8 .
+```
+or a single file
+
+```
+  flake8 my_python_file.py
+```
+**NOTE** you must resolve any errors that show
+
+2. Running `black`
+
+all project
+```
+  black .
+```
+or a single file
+
+```
+  black my_python_file.py
+```
 
 More? See https://pagure.io/fedora-contributor-trends/issues!
